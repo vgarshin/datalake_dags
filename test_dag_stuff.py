@@ -40,7 +40,8 @@ with DAG(
             spec=k8s.V1PodSpec(
                 containers=[
                     k8s.V1Container(
-                        name="base", image=f"{worker_container_repository}:{worker_container_tag}"
+                        #name="base", image=f"{worker_container_repository}:{worker_container_tag}"
+                        name="sparketl", image="vgarshin/mibapysparks3:20211002v1"
                   ),
                 ]
             )
