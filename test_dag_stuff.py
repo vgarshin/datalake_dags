@@ -25,11 +25,54 @@ with DAG(
         ),
     }
 
+    # ================================================================
+
     @task(executor_config=executor_config_template)
     def task_with_template():
         print_stuff()
 
     first_task = task_with_template()
+
+    # ================================================================
+    # [START task_with_volume]
+
+    executor_config_volume_mount = {
+        "pod_override": k8s.V1Pod(
+            spec=k8s.V1PodSpec(
+                containers=[
+                    k8s.V1Container(
+                        name="base",
+                        volume_mounts=[
+                            k8s.V1VolumeMount(mount_path="/foo/", name="airflow-pvc")
+                        ],
+                    )
+                ],
+                volumes=[
+                    k8s.V1Volume(
+                        name="airflow-pvc",
+                        host_path=k8s.V1HostPathVolumeSource(path="/tmp/"),
+                    )
+                ],
+            )
+        ),
+    }
+
+    @task(executor_config=executor_config_volume_mount)
+    def test_volume_mount():
+        """
+        Tests whether the volume has been mounted.
+        """
+        with open('/foo/volume_mount_test.txt', 'w') as foo:
+            foo.write('Hello')
+
+        return_code = os.system("cat /foo/volume_mount_test.txt")
+        if return_code != 0:
+            raise ValueError(f"Error when checking volume mount. Return code {return_code}")
+
+    volume_task = test_volume_mount()
+
+    # [END task_with_volume]
+    # ================================================================
 
     # You can also change the base image, here we used the worker image for demonstration.
     # Note that the image must have the same configuration as the
@@ -54,4 +97,6 @@ with DAG(
 
     second_task = base_image_override_task()
 
-    first_task >> second_task
+    # ================================================================
+
+    first_task >> volume_task >> second_task
