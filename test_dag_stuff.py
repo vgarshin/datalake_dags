@@ -43,13 +43,15 @@ with DAG(
                     k8s.V1Container(
                         name="base",
                         volume_mounts=[
-                            k8s.V1VolumeMount(mount_path="/foo/", name="airflow-pvc")
+                            #k8s.V1VolumeMount(mount_path="/foo/", name="airflow-pvc")
+                            k8s.V1VolumeMount(mount_path="/foo/", name="example-kubernetes-test-volume")
                         ],
                     )
                 ],
                 volumes=[
                     k8s.V1Volume(
-                        name="airflow-pvc",
+                        #name="airflow-pvc",
+                        name="example-kubernetes-test-volume",
                         host_path=k8s.V1HostPathVolumeSource(path="/tmp/"),
                     )
                 ],
