@@ -70,7 +70,7 @@ if k8s:
                         k8s.V1Container(
                             name="base",
                             volume_mounts=[
-                                k8s.V1VolumeMount(mount_path="/foo/", name="example-kubernetes-test-volume")
+                                k8s.V1VolumeMount(mount_path="/tmp/foo/", name="example-kubernetes-test-volume")
                             ],
                         )
                     ],
@@ -86,19 +86,19 @@ if k8s:
         }
 
         @task(executor_config=executor_config_volume_mount)
-        def test_volume_mount():
+        def test_volume_mount_pvc():
             """
             Tests whether the volume has been mounted.
             """
 
-            with open('/foo/volume_mount_test.txt', 'w') as foo:
+            with open('/tmp/foo/volume_mount_test.txt', 'w') as foo:
                 foo.write('Hello')
 
-            return_code = os.system("cat /foo/volume_mount_test.txt")
+            return_code = os.system("cat /tmp/foo/volume_mount_test.txt")
             if return_code != 0:
                 raise ValueError(f"Error when checking volume mount. Return code {return_code}")
 
-        volume_task = test_volume_mount()
+        volume_task_pvc = test_volume_mount_pvc()
         # [END task_with_volume]
 
         # [START task_with_sidecar]
@@ -232,4 +232,4 @@ if k8s:
 
         four_task = task_with_resource_limits()
 
-        start_task >> [volume_task, other_ns_task, sidecar_task] >> third_task >> [base_image_task, four_task]
+        start_task >> [volume_task_pvc, other_ns_task, sidecar_task] >> third_task >> [base_image_task, four_task]
