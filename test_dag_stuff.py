@@ -77,7 +77,7 @@ if k8s:
                     volumes=[
                         k8s.V1Volume(
                             name="example-kubernetes-test-volume",
-                            persistent_volume_claim=k8s.V1PersistentVolume(claim_name='airflow-pvc')
+                            persistent_volume_claim=k8s.V1PersistentVolumeClaim(claim_name='airflow-pvc')
                             #host_path=k8s.V1HostPathVolumeSource(path="/tmp/"),
                         )
                     ],
