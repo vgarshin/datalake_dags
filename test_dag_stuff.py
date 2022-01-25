@@ -45,7 +45,7 @@ except ImportError:
 
 if k8s:
     with DAG(
-        dag_id='example_kubernetes_executor',
+        dag_id='example_kubernetes_executor_pvc',
         schedule_interval=None,
         start_date=datetime(2021, 1, 1),
         catchup=False,
