@@ -25,7 +25,7 @@ with DAG(dag_id='zoom_data_load',
         volume_mounts=[air_volume_mount, ],
         cmds=[
             "sh", "-c",
-            "pwd > /home/jovyan/zoomdataload/pwd.txt && cd /home/jovyan/zoomdataload && date > date.txt"
+            "pwd > /home/jovyan/zoomdataload/pwd.txt && cd /home/jovyan/zoomdataload && date > date.txt && git clone https://github.com/vgarshin/datalake_scripts"
             #'cd /home/jovyan/zoomdataload;',
             #'pwd > /home/jovyan/zoomdataload/pwd.txt;',
             #'date > date.txt;',
@@ -33,18 +33,18 @@ with DAG(dag_id='zoom_data_load',
         ],
         startup_timeout_seconds=300,
     )
-    task2 = KubernetesPodOperator(
-        task_id='zoom_data_load_run_script',
-        name='zoom_run_script',
-        namespace='airflow',
-        image='vgarshin/mibapysparks3:20211002v1',
-        volumes=[air_volume, ],
-        volume_mounts=[air_volume_mount, ],
-        cmds=[
-            "sh", "-c",
-            'python /root/zoomdataload/scripts/zoom_load.py',
-        ],
-        startup_timeout_seconds=300,
-    )
+#    task2 = KubernetesPodOperator(
+#        task_id='zoom_data_load_run_script',
+#        name='zoom_run_script',
+#        namespace='airflow',
+#        image='vgarshin/mibapysparks3:20211002v1',
+#        volumes=[air_volume, ],
+#        volume_mounts=[air_volume_mount, ],
+#        cmds=[
+#            "sh", "-c",
+#            'python /root/zoomdataload/scripts/zoom_load.py',
+#        ],
+#        startup_timeout_seconds=300,
+#    )
 
-    task1 >> task2
+    task1 #>> task2
