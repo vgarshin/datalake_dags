@@ -3,10 +3,10 @@ from kubernetes.client import V1VolumeMount, V1Volume, V1PersistentVolumeClaimVo
 from airflow import DAG
 from airflow.providers.cncf.kubernetes.operators.kubernetes_pod import KubernetesPodOperator
 from airflow.utils.dates import days_ago
-from datetime import datetime
+from datetime import datetime, timedelta
 
 with DAG(dag_id='zoom_data_load',
-         start_date=datetime(2022, 01, 27),
+         start_date=datetime(2022, 1, 27),
          schedule_interval='2 0 * * *',
          retry_delay=timedelta(minutes=10),
          tags=['zoom']) as dag:
