@@ -27,7 +27,7 @@ with DAG(dag_id='zoom_data_load',
             "sh", "-c",
             'cd /root/zoomdataload; git clone https://github.com/vgarshin/datalake_scripts',
         ],
-        startup_timeout_seconds=60,
+        startup_timeout_seconds=300,
     )
     task2 = KubernetesPodOperator(
         task_id='zoom_data_load_run_script',
@@ -40,7 +40,7 @@ with DAG(dag_id='zoom_data_load',
             "sh", "-c",
             'cd /root/zoomdataload/datalake_scripts; python zoom_load.py',
         ],
-        startup_timeout_seconds=60,
+        startup_timeout_seconds=300,
     )
 
     task1 >> task2
