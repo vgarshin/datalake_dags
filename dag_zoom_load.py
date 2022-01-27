@@ -24,8 +24,13 @@ with DAG(dag_id='zoom_data_load',
         volumes=[air_volume, ],
         volume_mounts=[air_volume_mount, ],
         cmds=[
-            "sh", "-c",
-            'cd /home/jovyan/zoomdataload && pwd > /home/jovyan/zoomdataload/pwd.txt && date > date.txt && git clone https://github.com/vgarshin/datalake_scripts',
+            "sh", "-c"
+        ],
+        arguments=[
+            'cd /home/jovyan/zoomdataload;',
+            'pwd > /home/jovyan/zoomdataload/pwd.txt;',
+            'date > date.txt;',
+            'git clone https://github.com/vgarshin/datalake_scripts',
         ],
         startup_timeout_seconds=300,
     )
