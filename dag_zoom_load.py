@@ -38,7 +38,7 @@ with DAG(dag_id='zoom_data_load',
         volume_mounts=[air_volume_mount, ],
         cmds=[
             "sh", "-c",
-            'cd /root/zoomdataload; python zoom_load.py',
+            'cd /root/zoomdataload/datalake_scripts; python zoom_load.py',
         ],
         startup_timeout_seconds=60,
     )
