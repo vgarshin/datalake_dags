@@ -19,8 +19,9 @@ with DAG(dag_id="example_k8s_volume", start_date=days_ago(1),
                                   volumes=[myapp_volume, ],
                                   volume_mounts=[myapp_volume_mount, ],
                                   cmds=["sh", "-c",
-                                        'date > /root/myapp/date.txt',
-                                        ],
+                                        'git clone https://github.com/vgarshin/datalake_scripts /root/myapp/scripts',
+#                                        'date > /root/myapp/date.txt',
+                                  ],
                                   startup_timeout_seconds=60,
                                   )
 
