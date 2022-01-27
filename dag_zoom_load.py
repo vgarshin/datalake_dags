@@ -38,7 +38,7 @@ with DAG(dag_id='zoom_data_load',
         volume_mounts=[air_volume_mount, ],
         cmds=[
             "sh", "-c",
-            'cd /home/jovyan/zoomdataload && python zoom_load.py',
+            'cd /home/jovyan/zoomdataload && ls > files.txt && python zoom_load.py > log.txt'
         ],
         startup_timeout_seconds=300,
     )
