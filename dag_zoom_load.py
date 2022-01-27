@@ -5,10 +5,20 @@ from airflow.providers.cncf.kubernetes.operators.kubernetes_pod import Kubernete
 from airflow.utils.dates import days_ago
 from datetime import datetime, timedelta
 
+default_args = {
+    'owner': 'airflow',
+    'depends_on_past': False,
+    'email': ['vgarshin@vtb.education'],
+    'email_on_failure': False,
+    'email_on_retry': False,
+    'retries': 3,
+    'retry_delay': timedelta(minutes=10)
+}
+
 with DAG(dag_id='zoom_data_load',
+         default_args=default_args,
          start_date=datetime(2022, 1, 27),
          schedule_interval='2 0 * * *',
-         retry_delay=timedelta(minutes=10),
          tags=['zoom']) as dag:
     air_volume = V1Volume(
         name='airflow-volume',
