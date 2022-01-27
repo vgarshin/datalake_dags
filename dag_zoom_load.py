@@ -11,8 +11,8 @@ default_args = {
     'email': ['vgarshin@vtb.education'],
     'email_on_failure': False,
     'email_on_retry': False,
-    'retries': 1,
-    'retry_delay': timedelta(minutes=1)
+    'retries': 3,
+    'retry_delay': timedelta(minutes=5)
 }
 
 with DAG(dag_id='zoom_data_load',
@@ -37,8 +37,7 @@ with DAG(dag_id='zoom_data_load',
         volume_mounts=[air_volume_mount, ],
         cmds=[
             "sh", "-c",
-            #'git clone https://github.com/vgarshin/datalake_scripts && mv datalake_scripts/*.py /home/jovyan/zoomdataload && 
-            'cd /home/jovyan/zoomdataload && python zoom_load.py > logs/zoom_load_log.txt'
+            'git clone https://github.com/vgarshin/datalake_scripts && mv datalake_scripts/*.py /home/jovyan/zoomdataload && cd /home/jovyan/zoomdataload && python zoom_load.py > logs/zoom_load_log.txt'
         ],
         startup_timeout_seconds=300,
     )
