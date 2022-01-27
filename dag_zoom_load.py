@@ -25,7 +25,7 @@ with DAG(dag_id='zoom_data_load',
         volume_mounts=[air_volume_mount, ],
         cmds=[
             "sh", "-c",
-            'git clone https://github.com/vgarshin/datalake_scripts /root/zoomdataload',
+            'git clone https://github.com/vgarshin/datalake_scripts /root/zoomdataload/scripts',
         ],
         startup_timeout_seconds=300,
     )
@@ -38,7 +38,7 @@ with DAG(dag_id='zoom_data_load',
         volume_mounts=[air_volume_mount, ],
         cmds=[
             "sh", "-c",
-            'python zoom_load.py',
+            'python /root/zoomdataload/scripts/zoom_load.py',
         ],
         startup_timeout_seconds=300,
     )
