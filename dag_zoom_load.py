@@ -3,10 +3,12 @@ from kubernetes.client import V1VolumeMount, V1Volume, V1PersistentVolumeClaimVo
 from airflow import DAG
 from airflow.providers.cncf.kubernetes.operators.kubernetes_pod import KubernetesPodOperator
 from airflow.utils.dates import days_ago
+from datetime import datetime
 
 with DAG(dag_id='zoom_data_load',
-         start_date=days_ago(1),
-         schedule_interval='@once',
+         start_date=datetime(2022, 01, 27),
+         schedule_interval='2 0 * * *',
+         retry_delay=timedelta(minutes=10),
          tags=['zoom']) as dag:
     air_volume = V1Volume(
         name='airflow-volume',
@@ -16,20 +18,7 @@ with DAG(dag_id='zoom_data_load',
         mount_path='/home/jovyan/zoomdataload',
         name='airflow-volume'
     )
-    task1 = KubernetesPodOperator(
-        task_id='zoom_data_load_get_script',
-        name='zoom_get_script',
-        namespace='airflow',
-        image='vgarshin/mibaminpy:20210917v0',
-        volumes=[air_volume, ],
-        volume_mounts=[air_volume_mount, ],
-        cmds=[
-            "sh", "-c",
-            'git clone https://github.com/vgarshin/datalake_scripts && mv datalake_scripts/*.py /home/jovyan/zoomdataload'
-        ],
-        startup_timeout_seconds=300,
-    )
-    task2 = KubernetesPodOperator(
+    task = KubernetesPodOperator(
         task_id='zoom_data_load_run_script',
         name='zoom_run_script',
         namespace='airflow',
@@ -38,9 +27,9 @@ with DAG(dag_id='zoom_data_load',
         volume_mounts=[air_volume_mount, ],
         cmds=[
             "sh", "-c",
-            'cd /home/jovyan/zoomdataload && ls > files.txt && python zoom_load.py > log.txt'
+            'git clone https://github.com/vgarshin/datalake_scripts && mv datalake_scripts/*.py /home/jovyan/zoomdataload && cd /home/jovyan/zoomdataload && python zoom_load.py > logs/zoom_load_log.txt'
         ],
         startup_timeout_seconds=300,
     )
 
-    task1 >> task2
+    task
