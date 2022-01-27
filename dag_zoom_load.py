@@ -13,7 +13,7 @@ with DAG(dag_id='zoom_data_load',
         persistent_volume_claim=V1PersistentVolumeClaimVolumeSource(claim_name='airflow-pvc')
     )
     air_volume_mount = V1VolumeMount(
-        mount_path='/root/zoomdataload',
+        mount_path='/home/jovyan/zoomdataload',
         name='airflow-volume'
     )
     task1 = KubernetesPodOperator(
@@ -25,8 +25,8 @@ with DAG(dag_id='zoom_data_load',
         volume_mounts=[air_volume_mount, ],
         cmds=[
             "sh", "-c",
-            'date > /root/zoomdataload/date.txt;',
-            'git clone https://github.com/vgarshin/datalake_scripts /root/zoomdataload/scripts',
+            'date > /home/jovyan/zoomdataload/date.txt;',
+            'git clone https://github.com/vgarshin/datalake_scripts /home/jovyan/zoomdataload/scripts',
         ],
         startup_timeout_seconds=300,
     )
