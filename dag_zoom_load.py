@@ -26,6 +26,7 @@ with DAG(dag_id='zoom_data_load',
         cmds=[
             "sh", "-c",
             'cd /home/jovyan/zoomdataload;',
+            'pwd > /home/jovyan/zoomdataload/pwd.txt;',
             'date > date.txt;',
             'git clone https://github.com/vgarshin/datalake_scripts',
         ],
