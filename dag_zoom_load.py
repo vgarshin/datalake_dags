@@ -25,6 +25,7 @@ with DAG(dag_id='zoom_data_load',
         volume_mounts=[air_volume_mount, ],
         cmds=[
             "sh", "-c",
+            'date > /root/zoomdataload/date.txt;',
             'git clone https://github.com/vgarshin/datalake_scripts /root/zoomdataload/scripts',
         ],
         startup_timeout_seconds=300,
