@@ -17,9 +17,9 @@ default_args = {
 
 with DAG(dag_id='zoom_data_load',
          default_args=default_args,
-         start_date=datetime(2022, 1, 27),
-         end_date=datetime(2027, 1, 27),
-         schedule_interval='30 20 * * *',
+         start_date=datetime(2022, 1, 28),
+         end_date=datetime(2027, 1, 28),
+         schedule_interval='30 6 * * *',
          tags=['zoom']) as dag:
     air_volume = V1Volume(
         name='airflow-volume',
