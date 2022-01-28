@@ -40,6 +40,7 @@ with DAG(dag_id='zoom_data_load',
             "sh", "-c",
             'git clone https://github.com/vgarshin/datalake_scripts && mv datalake_scripts/*.py /home/jovyan/zoomdataload && cd /home/jovyan/zoomdataload && python zoom_load.py > logs/zoom_load_log.txt'
         ],
+        is_delete_operator_pod=True,
         startup_timeout_seconds=300,
     )
 
