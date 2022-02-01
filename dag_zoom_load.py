@@ -1,5 +1,9 @@
-from kubernetes.client import V1VolumeMount, V1Volume, V1PersistentVolumeClaimVolumeSource
-
+from kubernetes.client import (
+    V1VolumeMount, 
+    V1Volume, 
+    V1PersistentVolumeClaimVolumeSource, 
+    V1ResourceRequirements
+)
 from airflow import DAG
 from airflow.providers.cncf.kubernetes.operators.kubernetes_pod import KubernetesPodOperator
 from airflow.utils.dates import days_ago
