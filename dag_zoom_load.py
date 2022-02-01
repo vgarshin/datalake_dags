@@ -31,8 +31,8 @@ resource_req = V1ResourceRequirements(
 
 with DAG(dag_id='zoom_data_load',
          default_args=default_args,
-         start_date=datetime(2022, 2, 1),
-         end_date=datetime(2027, 2, 1),
+         start_date=datetime(2022, 1, 31),
+         end_date=datetime(2027, 1, 31),
          schedule_interval='30 20 * * *',
          tags=['zoom']) as dag:
     air_volume = V1Volume(
