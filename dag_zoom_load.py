@@ -37,7 +37,9 @@ with DAG(dag_id='zoom_data_load',
          tags=['zoom']) as dag:
     air_volume = V1Volume(
         name='airflow-volume',
-        persistent_volume_claim=V1PersistentVolumeClaimVolumeSource(claim_name='airflow-pvc')
+        persistent_volume_claim=V1PersistentVolumeClaimVolumeSource(
+            claim_name='airflow-shared-pvc'
+        )
     )
     air_volume_mount = V1VolumeMount(
         mount_path='/home/jovyan/zoomdataload',
