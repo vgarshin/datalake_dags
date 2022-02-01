@@ -14,6 +14,16 @@ default_args = {
     'retries': 3,
     'retry_delay': timedelta(minutes=5)
 }
+resource_req = V1ResourceRequirements(
+    requests={
+        'cpu': 1,
+        'memory': '2G'
+    },
+    limits={
+        'cpu': 2,
+        'memory': '4G'
+    }
+)
 
 with DAG(dag_id='zoom_data_load',
          default_args=default_args,
@@ -33,7 +43,8 @@ with DAG(dag_id='zoom_data_load',
         task_id='zoom_data_load_run_script',
         name='zoom_run_script',
         namespace='airflow',
-        image='vgarshin/mibapysparks3:20211002v1',
+        image='vgarshin/mibapysparks3:20220131v2',
+        resources=resource_req,
         volumes=[air_volume, ],
         volume_mounts=[air_volume_mount, ],
         cmds=[
