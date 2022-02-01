@@ -55,7 +55,7 @@ with DAG(dag_id='zoom_data_load',
         volume_mounts=[air_volume_mount, ],
         cmds=[
             "sh", "-c",
-            'git clone https://github.com/vgarshin/datalake_scripts && mv datalake_scripts/*.py /home/jovyan/zoomdataload && cd /home/jovyan/zoomdataload && python zoom_load.py > logs/zoom_load_log.txt'
+            'git clone https://github.com/vgarshin/datalake_scripts && python datalake_scripts/zoom_load.py > /home/jovyan/zoomdataload/logs/zoom_load_log.txt'
         ],
         is_delete_operator_pod=True,
         startup_timeout_seconds=900,
