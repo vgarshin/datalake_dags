@@ -55,7 +55,7 @@ with DAG(dag_id='zoom_data_proc',
         volume_mounts=[air_volume_mount, ],
         cmds=[
             "sh", "-c",
-            'git clone https://github.com/vgarshin/datalake_scripts && python datalake_scripts/zoom_proc.py'
+            'git clone https://github.com/vgarshin/datalake_scripts && export SPARK_LOCAL_HOSTNAME=localhost && python datalake_scripts/zoom_proc.py'
         ],
         is_delete_operator_pod=True,
         startup_timeout_seconds=900,
