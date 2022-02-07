@@ -31,8 +31,8 @@ resource_req = V1ResourceRequirements(
 
 with DAG(dag_id='zoom_data_load_day',
          default_args=default_args,
-         start_date=datetime(2022, 1, 31),
-         end_date=datetime(2027, 1, 31),
+         start_date=datetime(2022, 2, 6),
+         end_date=datetime(2027, 2, 6),
          schedule_interval=None,
          tags=['zoom']) as dag:
     air_volume = V1Volume(
@@ -47,15 +47,15 @@ with DAG(dag_id='zoom_data_load_day',
     )
     task = KubernetesPodOperator(
         task_id='zoom_data_load_day_run_script',
-        name='zoom_run_script',
+        name='zoom_load_day_run_script',
         namespace='airflow',
-        image='vgarshin/mibapysparks3:20220131v2',
+        image='vgarshin/mibapysparks3:20220204v0',
         resources=resource_req,
         volumes=[air_volume, ],
         volume_mounts=[air_volume_mount, ],
         cmds=[
             "sh", "-c",
-            'git clone https://github.com/vgarshin/datalake_scripts && python datalake_scripts/zoom_load_day.py > /home/jovyan/zoomdataload/logs/zoom_load_day_log.txt'
+            'git clone https://github.com/vgarshin/datalake_scripts && python datalake_scripts/zoom_load.py 2022-01-31'
         ],
         is_delete_operator_pod=True,
         startup_timeout_seconds=900,
