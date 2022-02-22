@@ -31,7 +31,7 @@ resource_req = V1ResourceRequirements(
 
 with DAG(dag_id='jhub_data_proc',
          default_args=default_args,
-         start_date=datetime(2022, 2, 22),
+         start_date=datetime(2022, 2, 22, 10, 0, 0),
          end_date=datetime(2027, 2, 22),
          schedule_interval='10 * * * *',
          tags=['jhub']) as dag:
