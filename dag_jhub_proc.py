@@ -29,12 +29,12 @@ resource_req = V1ResourceRequirements(
     }
 )
 
-with DAG(dag_id='zoom_data_proc',
+with DAG(dag_id='jhub_data_proc',
          default_args=default_args,
          start_date=datetime(2022, 2, 22),
          end_date=datetime(2027, 2, 22),
          schedule_interval='10 * * * *',
-         tags=['zoom']) as dag:
+         tags=['jhub']) as dag:
     air_volume = V1Volume(
         name='airflow-volume',
         persistent_volume_claim=V1PersistentVolumeClaimVolumeSource(
