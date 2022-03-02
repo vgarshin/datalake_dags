@@ -55,7 +55,7 @@ with DAG(dag_id='monkey_data_load',
         volume_mounts=[air_volume_mount, ],
         cmds=[
             "sh", "-c",
-            'git clone https://github.com/vgarshin/datalake_scripts && python datalake_scripts/monkey_load.py'
+            'git clone https://github.com/vgarshin/datalake_scripts && python datalake_scripts/monkey_load.py 1'
         ],
         is_delete_operator_pod=True,
         startup_timeout_seconds=900,
