@@ -31,8 +31,8 @@ resource_req = V1ResourceRequirements(
 
 with DAG(dag_id='vk_data_load',
          default_args=default_args,
-         start_date=datetime(2022, 3, 30),
-         end_date=datetime(2027, 3, 30),
+         start_date=datetime(2022, 3, 28),
+         end_date=datetime(2027, 3, 28),
          schedule_interval='0 5 * * 1',
          tags=['vk']) as dag:
     air_volume = V1Volume(
