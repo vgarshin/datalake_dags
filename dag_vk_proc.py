@@ -31,7 +31,7 @@ resource_req = V1ResourceRequirements(
 
 with DAG(dag_id='vk_data_proc',
          default_args=default_args,
-         start_date=datetime(2022, 4, 25, 10, 0, 0),
+         start_date=datetime(2022, 4, 25, 0, 0, 0),
          end_date=datetime(2027, 4, 25),
          schedule_interval='0 8 * * 1',
          tags=['vk']) as dag:
