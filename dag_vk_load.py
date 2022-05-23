@@ -91,4 +91,4 @@ with DAG(dag_id='vk_data_load',
         startup_timeout_seconds=900,
     )
 
-    task
+    task1 >> task2 >> task3
