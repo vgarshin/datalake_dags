@@ -69,7 +69,7 @@ with DAG(dag_id='vk_data_load_test',
         volume_mounts=[air_volume_mount, ],
         cmds=[
             "sh", "-c",
-            'echo $GITLAB_USERNAME && echo $GITLAB_PASSWORD && git clone https://${GITLAB_USERNAME}:${GITLAB_PASSWORD}@gitlab.spbu.ru/st807908/digital-profile-student.git'
+            'echo $GITLAB_USERNAME && echo $GITLAB_PASSWORD && git clone https://vgarshin:Dsai2020@gitlab.spbu.ru/st807908/digital-profile-student.git'
         ],
         is_delete_operator_pod=True,
         startup_timeout_seconds=900,
