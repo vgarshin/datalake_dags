@@ -32,13 +32,13 @@ resource_req = V1ResourceRequirements(
 secret_env_user= Secret(
     deploy_type='env',
     deploy_target='GITLAB_USERNAME',
-    secret='gitlab-credentials',
+    secret='git-credentials',
     key='GITLAB_USERNAME'
 )
 secret_env_pwd= Secret(
     deploy_type='env',
     deploy_target='GITLAB_PASSWORD',
-    secret='gitlab-credentials',
+    secret='git-credentials',
     key='GITLAB_PASSWORD'
 )
 YESTERDAY = datetime.now() - timedelta(days=1)
@@ -69,7 +69,7 @@ with DAG(dag_id='vk_data_load_test',
         volume_mounts=[air_volume_mount, ],
         cmds=[
             "sh", "-c",
-            'export GITLAB_USERNAME=vgarshin && export GITLAB_PASSWORD=Dsai2020 && echo $GITLAB_USERNAME && echo $GITLAB_PASSWORD && git clone https://${GITLAB_USERNAME}:${GITLAB_PASSWORD}@gitlab.spbu.ru/st807908/digital-profile-student.git'
+            'echo $GITLAB_USERNAME && echo $GITLAB_PASSWORD && git clone https://${GITLAB_USERNAME}:${GITLAB_PASSWORD}@gitlab.spbu.ru/st807908/digital-profile-student.git'
         ],
         is_delete_operator_pod=True,
         startup_timeout_seconds=900,
